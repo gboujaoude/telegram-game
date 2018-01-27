@@ -1,5 +1,6 @@
 *.iml
 out/
+thumbs.db
 
 .idea     ##IntelliJ IDE project config
 .settings ##Eclipse IDE project config
