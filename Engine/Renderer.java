@@ -30,7 +30,7 @@ public class Renderer implements IEngineInterface {
         ImageView background = _scene.getBackground();
         if (background != null)
         {
-            _gc.drawImage(background.getImage(), 10, 10);
+            _gc.drawImage(background.getImage(), 0, 0);
         }
         return true;
     }

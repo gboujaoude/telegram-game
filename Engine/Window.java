@@ -12,8 +12,8 @@ public class Window implements IEngineInterface {
     private Canvas _canvas;
     private GraphicsContext _gc;
     private boolean _isFullscreen = false;
-    private int _width = 512;
-    private int _height = 512;
+    private int _width = 1024;
+    private int _height = 768;
     private String _title = "";
 
     public void setTitle(String title)
