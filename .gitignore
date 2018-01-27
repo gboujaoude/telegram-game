@@ -1,0 +1,6 @@
+*.iml
+out/
+
+.idea     ##IntelliJ IDE project config
+.settings ##Eclipse IDE project config
+.project  ##Eclipse IDE project config
