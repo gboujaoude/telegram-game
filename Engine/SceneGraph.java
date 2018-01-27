@@ -9,7 +9,10 @@ public class SceneGraph {
 
     public void setBackground(String image)
     {
-        _background = new ImageView(image);
+        _background = new ImageView(new Image(image,
+                                              Singleton.engine.getWindow().getWidth(),
+                                              Singleton.engine.getWindow().getHeight(),
+                                              false, true));
     }
 
     public ImageView getBackground()
