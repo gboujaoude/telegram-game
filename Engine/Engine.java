@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
@@ -70,6 +71,20 @@ public class Engine extends Application {
             _isRunning = _isRunning && _input.update(deltaSeconds);
             _isRunning = _isRunning && _application.update(deltaSeconds);
         }
+        shutdown();
+    }
+
+    @Override
+    public void stop(){
+        _isRunning = false;
+        _application.shutdown();
+        System.exit(0);
+    }
+
+    private void shutdown()
+    {
+        _application.shutdown();
+        Platform.exit();
     }
 
     public static void main(String[] args)
