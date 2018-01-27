@@ -30,6 +30,11 @@ public class Engine extends Application {
         return _input;
     }
 
+    public SceneGraph getScene()
+    {
+        return _renderer.getScene();
+    }
+
     @Override
     public void start(Stage stage) {
         if (_isInitialized) return;
@@ -57,6 +62,7 @@ public class Engine extends Application {
         while (_isRunning) {
             long currTime = System.currentTimeMillis();
             long elapsed = currTime - _prevFrameTime;
+            if (elapsed < (1/15.0*1000.0)) continue;
             _prevFrameTime = currTime;
             double deltaSeconds = elapsed / 1000.0;
             _isRunning = _isRunning && _window.update(deltaSeconds);
@@ -64,7 +70,6 @@ public class Engine extends Application {
             _isRunning = _isRunning && _input.update(deltaSeconds);
             _isRunning = _isRunning && _application.update(deltaSeconds);
         }
-
     }
 
     public static void main(String[] args)

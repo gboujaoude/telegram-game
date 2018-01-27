@@ -8,6 +8,12 @@ import javax.sound.midi.SysexMessage;
 public class Renderer implements IEngineInterface {
     private GraphicsContext _gc;
     private SceneGraph _scene;
+    boolean once = true;
+
+    public SceneGraph getScene()
+    {
+        return _scene;
+    }
 
     public void init(GraphicsContext gc)
     {
@@ -24,9 +30,6 @@ public class Renderer implements IEngineInterface {
         ImageView background = _scene.getBackground();
         if (background != null)
         {
-            background.setFitWidth(Singleton.engine.getWindow().getWidth());
-            background.setFitHeight(Singleton.engine.getWindow().getHeight());
-            background.setPreserveRatio(true);
             _gc.drawImage(background.getImage(), 10, 10);
         }
         return true;
