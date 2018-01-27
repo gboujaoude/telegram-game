@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 /**
  * Maybe we need this idk
  */
-public class Window {
+public class Window implements IEngineInterface {
     private Stage _stage;
     private Canvas _canvas;
     private GraphicsContext _gc;
@@ -54,8 +54,13 @@ public class Window {
         _canvas = new Canvas(_width, _height);
         root.getChildren().add(_canvas);
         stage.setScene(new Scene(root));
-        _gc = _canvas.getGraphicsContext2D();
         stage.show();
+        _gc = _canvas.getGraphicsContext2D();
         return _gc;
+    }
+
+    @Override
+    public boolean update(double deltaSeconds) {
+        return true;
     }
 }
