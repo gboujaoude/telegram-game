@@ -36,7 +36,23 @@ public class Renderer implements IEngineInterface {
             _gc.drawImage(background.getImage(), 0, 0);
         }
         _scene.reorderActors();
-        for (Actor a : _scene.getActors()) a.render(_gc);
+        boolean mouseClickRegistered = Singleton.engine.getInputManager().isClicked();
+        int[] point = Singleton.engine.getInputManager().getLastPointClicked();
+        for (Actor a : _scene.getActors())
+        {
+            if (mouseClickRegistered)
+            {
+                int x = a.getX();
+                int y = a.getY();
+                int width = a.getWidth();
+                int height = a.getHeight();
+                if (point[0] >= x && point[0] < x + width && point[1] <= y && point[1] > y - height)
+                {
+                    a.onMouseClick();
+                }
+            }
+            a.render(_gc);
+        }
         return true;
     }
 }

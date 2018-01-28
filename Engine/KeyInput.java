@@ -1,6 +1,8 @@
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Pair;
+
 import java.util.Stack;
 /**
  * Provides an easy way for handling keyboard input
@@ -9,7 +11,7 @@ public class KeyInput implements IEngineInterface {
 
     private Stack<String> _keyBuffer = new Stack<String>();
     private boolean _isClicked = false;
-    private Point _lastPointClicked;
+    private int[] _lastPointClicked;
 
     KeyInput(Scene scene)
     {
@@ -17,7 +19,10 @@ public class KeyInput implements IEngineInterface {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> _keyBuffer.push(e.getText()));
     }
 
-    private void updateLastClickedPoint(MouseEvent e) {_lastPointClicked = new Point(e.getX(), e.getY()); }
+    private void updateLastClickedPoint(MouseEvent e) {
+        _isClicked = true;
+        _lastPointClicked = new int[]{(int)e.getX(), (int)e.getY()};
+    }
 
     public String getLastKey()
     {
@@ -29,7 +34,7 @@ public class KeyInput implements IEngineInterface {
         return _isClicked;
     }
 
-    public Point getLastPointClicked()
+    public int[] getLastPointClicked()
     {
         _isClicked = false;
         return _lastPointClicked;
