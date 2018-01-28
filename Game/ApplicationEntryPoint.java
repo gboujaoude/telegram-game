@@ -31,7 +31,8 @@ public class ApplicationEntryPoint implements IEngineInterface {
         CharacterEntity ce = _gameManager.getInFocus();
         if(ce != null){
         	String lastKey = keyManager.getLastKey();
-        	if(!lastKey.isEmpty()){
+
+        	if(!lastKey.isEmpty() && lastKey.matches("[a-zA-Z]*")){
         		ce.setCharacter(lastKey.charAt(0));
         		ce.setBlurRadius(0);
         	}
