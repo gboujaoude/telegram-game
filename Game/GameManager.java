@@ -1,6 +1,13 @@
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.image.Image;
+
 import sun.util.resources.cldr.chr.CalendarData_chr_US;
 
+import javafx.scene.image.ImageView;
 import javax.xml.soap.Text;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.lang.reflect.UndeclaredThrowableException;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -25,8 +32,8 @@ public class GameManager
         _yOffset = Singleton.engine.getWindow().getHeight()/4 * 2;
         applyBlur();
         setBackground();
-        UIButton button = new UIButton("Start", 50, 100);
-        button.setStyle("-fx-background-image: url('file:img/buttonsAndSigns/StartButton.jpg')");
+        addButton(300,400,"img/buttonsAndSigns/StartButton.png",1,"Start");
+
     }
 
     void nextLevel()
@@ -99,5 +106,61 @@ public class GameManager
     }
 
 
+    void addButton(int x, int y, String imagePath, int mode,String text)
+    {
+
+        UIButton button = new UIButton(x, y);
+
+        try
+        {
+            FileInputStream input = new FileInputStream(imagePath);
+            Image image = new Image(input);
+            ImageView imageView = new ImageView(image);
+            button.setGraphic(imageView);
+
+        }
+
+        catch (Exception e)
+        {
+            System.out.println(e);
+            button.setText(text);
+        }
+        switch(mode)
+        {
+            case 1: button.setActionEvent(new EventHandler<ActionEvent>()
+            {
+                @Override
+                public void handle(ActionEvent event)
+                {
+                    nextLevel();
+                    button.removeFromWindow();
+                    System.out.println("The button was clicked");
+                }
+            });
+            break;
+            case 2: button.setActionEvent(new EventHandler<ActionEvent>()
+            {
+                @Override
+                public void handle(ActionEvent event)
+                {
+//                    TODO next tele after check
+                    System.out.println("The button was clicked1");
+                }
+            });
+            break;
+             default: button.setActionEvent(new EventHandler<ActionEvent>()
+            {
+                @Override
+                public void handle(ActionEvent event)
+                {
+//                    TODO goback to main menu
+                    System.out.println("The button was clicked2");
+                }
+            });
+        }
+
+        button.addToWindow();
+
+    }
 
 }
