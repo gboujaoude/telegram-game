@@ -1,25 +1,25 @@
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-
+import java.util.Stack;
 /**
  * Provides an easy way for handling keyboard input
  */
 public class KeyInput implements IEngineInterface {
 
-    private String _lastKey;
+    private Stack<String> _keyBuffer;
     private boolean _isClicked;
     KeyInput(Scene scene)
     {
         scene.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> _isClicked = true);
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> _lastKey = e.getText());
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> _keyBuffer.push(e.getText()));
     }
     public String getLastKey()
     {
-        return _lastKey;
+        return _keyBuffer.empty() ? "" : _keyBuffer.pop();
     }
 
-    private boolean isClicked()
+    public boolean isClicked()
     {
         return _isClicked;
     }

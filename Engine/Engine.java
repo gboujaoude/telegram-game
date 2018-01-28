@@ -46,7 +46,7 @@ public class Engine extends Application {
         GraphicsContext gc = _window.init(stage);
         _renderer = new Renderer();
         _renderer.init(gc);
-        _input = new KeyInput();
+        _input = new KeyInput(stage.getScene());
         _application = new ApplicationEntryPoint();
         _application.init();
         new Thread(new Runnable()

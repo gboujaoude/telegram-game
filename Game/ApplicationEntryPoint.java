@@ -1,3 +1,4 @@
+import java.util.Stack;
 /**
  * This is the starting point for the game and its
  * functions will be called by the engine every frame
@@ -22,6 +23,17 @@ public class ApplicationEntryPoint implements IEngineInterface {
     @Override
     public boolean update(double deltaSeconds)
     {
+        KeyInput keyManager = Singleton.engine.getInputManager();
+        if(keyManager.isClicked())
+        {
+
+        }
+        String lastKey = keyManager.getLastKey();
+        if(!lastKey.isEmpty())
+        {
+            // Perform action.
+        }
+
         return true;
     }
 
