@@ -1,7 +1,9 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.TreeSet;
 
 /**
@@ -9,19 +11,10 @@ import java.util.TreeSet;
  */
 public class SceneGraph {
     private ImageView _background = null;
-    private TreeSet<Actor> _actors;
+    private LinkedList<Actor> _actors = new LinkedList<Actor>();
 
     SceneGraph()
     {
-        _actors = new TreeSet<>(new Comparator<Actor>()
-        {
-            @Override
-            public int compare(Actor a1, Actor a2) {
-                if (a1.getDepth() < a2.getDepth()) return -1;
-                else if (a1.getDepth() > a2.getDepth()) return 1;
-                else return 1; // If we return 0 then most everything at the same depth gets deleted
-            }
-        });
     }
 
     public void setBackground(String image)
@@ -39,7 +32,20 @@ public class SceneGraph {
 
     public void registerActor(Actor actor)
     {
-        _actors.add(actor);
+        if (_actors.size() == 0) _actors.add(actor);
+        int index = 0;
+        boolean wasAdded = false;
+        for (Actor a : _actors)
+        {
+            if (a.getDepth() < actor.getDepth())
+            {
+                _actors.add(index, actor);
+                wasAdded = true;
+                break;
+            }
+            ++index;
+        }
+        if (!wasAdded) _actors.add(actor);
     }
 
     public void removeActor(Actor actor)
@@ -49,13 +55,13 @@ public class SceneGraph {
 
     public void reorderActors()
     {
-        TreeSet<Actor> set = new TreeSet<>(_actors);
-        set.clear();
-        set.addAll(_actors);
-        _actors = set;
+        LinkedList<Actor> list = new LinkedList<Actor>(_actors);
+        _actors.clear();
+        for (Actor a : list) registerActor(a);
+        _actors = list;
     }
 
-    public TreeSet<Actor> getActors()
+    public LinkedList<Actor> getActors()
     {
         return _actors;
     }
