@@ -120,7 +120,7 @@ void loadLGame()
 {
     _level = 5;
     setBackground();
-    addButton(300,400,"img/buttonsAndSigns/MainMenuButton.png",3,"Main Menu");
+    addButton(300,400,"img/buttonsAndSigns/ExitButtonBlack.png",3,"Main Menu");
 
 }
 void removeHeart(UIButton button)
