@@ -32,7 +32,7 @@ public class Scramble
 
 		} catch (Exception e)
 		{
-			System.out.printf("This failed");
+			System.out.printf(e.toString());
 		}
 
 	}
@@ -94,27 +94,7 @@ public class Scramble
 	}
 
 
-	class Sentence
-	{
-		public String original;
-		public String scrambled;
 
-		public Sentence(String original, String scrambled)
-		{
-			this.original = original;
-			this.scrambled = scrambled;
-		}
-
-		public String getOriginal()
-		{
-			return this.original;
-		}
-		public String getScrambled()
-		{
-			return this.scrambled;
-		}
-
-	}
 	public Stack<Sentence> getter(int phase)
 	{
 		switch (phase)
@@ -122,10 +102,9 @@ public class Scramble
 			case 1: return battle1;
 			case 2: return battle2;
 			case 3: return battle3;
-
+			default: return battle3;
 
 		}
-		return battle3;
 
 
 	}
