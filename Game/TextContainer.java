@@ -31,7 +31,7 @@ public class TextContainer
 
             // Kick words to the next line if needed
             if (length >= width || length + x >= width) {
-                x = 0;
+                x = xstart;
                 y += size;
             }
 

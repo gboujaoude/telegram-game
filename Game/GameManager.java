@@ -15,8 +15,9 @@ public class GameManager
         _level = 1;
         _levelSentences = scramble.getter(_level);
         _currentSentence = new TextContainer();
-        int yOffset = Singleton.engine.getWindow().getHeight()/4 * 3;
-        _currentSentence.setText( _levelSentences.pop().getScrambled(), 50,0,yOffset);
+        int xOffset = 30;
+        int yOffset = Singleton.engine.getWindow().getHeight()/4 * 2;
+        _currentSentence.setText( _levelSentences.pop().getScrambled(), 50,xOffset,yOffset);
     }
 
 
