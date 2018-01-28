@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 /**
  *  Represents a single character to be drawn on the screen
  */
-public abstract class CharacterEntity extends Actor {
+public class CharacterEntity extends Actor {
     private GaussianBlur _blur;
     private String _character;
     private Text _text;
@@ -31,7 +31,7 @@ public abstract class CharacterEntity extends Actor {
     public void setFontsize(int size)
     {
         setWidthHeight(size, size);
-        _text.setFont(Font.font("Verdana", FontWeight.BOLD, size));
+        _text.setFont(Font.loadFont("file:resources/carbontype.ttf", size));
     }
 
     public char getCharacter()
@@ -47,6 +47,16 @@ public abstract class CharacterEntity extends Actor {
     public void setBlurRadius(double radius)
     {
         _blur.setRadius(radius);
+    }
+
+    @Override
+    public void update(double deltaseconds) {
+
+    }
+
+    @Override
+    public void onMouseClick() {
+
     }
 
     @Override

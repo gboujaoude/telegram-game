@@ -19,7 +19,7 @@ public class SceneGraph {
             public int compare(Actor a1, Actor a2) {
                 if (a1.getDepth() < a2.getDepth()) return -1;
                 else if (a1.getDepth() > a2.getDepth()) return 1;
-                else return 0;
+                else return 1; // If we return 0 then most everything at the same depth gets deleted
             }
         });
     }
