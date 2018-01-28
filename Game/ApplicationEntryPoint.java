@@ -28,6 +28,10 @@ public class ApplicationEntryPoint implements IEngineInterface {
     public boolean update(double deltaSeconds)
     {
         KeyInput keyManager = Singleton.engine.getInputManager();
+        CharacterEntity ce = _gameManager.getInFocus();
+        if(ce != null){
+        	ce.setBlurRadius(0);
+        }
         if(keyManager.isClicked())
         {
 
