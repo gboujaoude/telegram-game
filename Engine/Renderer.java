@@ -51,6 +51,7 @@ public class Renderer implements IEngineInterface {
                     a.onMouseClick();
                 }
             }
+            a.update(deltaSeconds);
             a.render(_gc);
         }
         return true;

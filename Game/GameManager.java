@@ -58,6 +58,7 @@ public class GameManager
 
     void setInFocus(CharacterEntity ce)
     {
+        if (_inFocus != null) _inFocus.setFlashPeriod(0);
         _inFocus = ce;
     }
 
