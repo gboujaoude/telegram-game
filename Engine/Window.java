@@ -68,6 +68,13 @@ public class Window implements IEngineInterface {
 
     @Override
     public boolean update(double deltaSeconds) {
+        if (_width != (int)_jfxScene.getWidth() || _height != (int)_jfxScene.getHeight())
+        {
+            _width = (int)_jfxScene.getWidth();
+            _height = (int)_jfxScene.getHeight();
+            _canvas.setWidth(_width);
+            _canvas.setHeight(_height);
+        }
         return true;
     }
 }

@@ -27,7 +27,9 @@ public class Renderer implements IEngineInterface {
 
     @Override
     public boolean update(double deltaSeconds) {
-        _gc.clearRect(0, 0, Singleton.engine.getWindow().getWidth(), Singleton.engine.getWindow().getHeight());
+        _gc.setFill(Color.ANTIQUEWHITE);
+        //_gc.clearRect(0, 0, Singleton.engine.getWindow().getWidth(), Singleton.engine.getWindow().getHeight());
+        _gc.fillRect(0, 0, Singleton.engine.getWindow().getWidth(), Singleton.engine.getWindow().getHeight());
         ImageView background = _scene.getBackground();
         if (background != null)
         {

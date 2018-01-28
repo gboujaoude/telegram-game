@@ -8,7 +8,7 @@ import java.util.Stack;
 public class KeyInput implements IEngineInterface {
 
     private Stack<String> _keyBuffer = new Stack<String>();
-    private boolean _isClicked;
+    private boolean _isClicked = false;
     private Point _lastPointClicked;
 
     KeyInput(Scene scene)
@@ -29,7 +29,11 @@ public class KeyInput implements IEngineInterface {
         return _isClicked;
     }
 
-    public Point getLastPointClicked() { return _lastPointClicked; }
+    public Point getLastPointClicked()
+    {
+        _isClicked = false;
+        return _lastPointClicked;
+    }
 
     @Override
     public boolean update(double deltaSeconds) {
