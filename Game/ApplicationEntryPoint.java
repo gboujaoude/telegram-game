@@ -10,6 +10,7 @@ public class ApplicationEntryPoint implements IEngineInterface {
      */
     public void init()
     {
+        GameManager gameManager;
     }
 
     /**
