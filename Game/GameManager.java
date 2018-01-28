@@ -37,9 +37,11 @@ public class GameManager
         applyBlur();
         setBackground();
         addButton(300,400,"img/buttonsAndSigns/StartButton.png",1,"Start");
-        heart1.setImage("file: img/buttonsAndSigns/HeartYellow.png",50,50);
-        heart1.setXYDepth(50,50,0);
-        Singleton.engine.getScene().registerActor(heart1);
+//        heart1.setImage("file: img/buttonsAndSigns/HeartRed.png",100,100);
+//        heart1.setXYDepth(100,100,0);
+        addButton(200,200, "img/buttonsAndSigns/RedHeart3.png",4,"1");
+//        Singleton.engine.getScene().registerActor(heart1);
+
     }
 
     void startFirstLevel()
@@ -160,6 +162,10 @@ public class GameManager
                 }
             });
             break;
+            case 4: button.setDisabled(true);
+                    button.setStyle("-fx-min-height: 3px; -fx-max-height: 3px; -fx-min-width: 3px");
+
+                break;
              default: button.setActionEvent(new EventHandler<ActionEvent>()
             {
                 @Override
