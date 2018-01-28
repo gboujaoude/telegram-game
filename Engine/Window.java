@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 public class Window implements IEngineInterface {
     private Stage _stage;
     private Canvas _canvas;
+    private Scene _jfxScene;
     private GraphicsContext _gc;
     private boolean _isFullscreen = false;
     private int _width = 1024;
@@ -46,6 +47,11 @@ public class Window implements IEngineInterface {
         _isFullscreen = fullscreen;
     }
 
+    public Scene getJFXScene()
+    {
+        return _jfxScene;
+    }
+
     public GraphicsContext init(Stage stage)
     {
         stage.setTitle(_title);
@@ -53,7 +59,8 @@ public class Window implements IEngineInterface {
         Group root = new Group();
         _canvas = new Canvas(_width, _height);
         root.getChildren().add(_canvas);
-        stage.setScene(new Scene(root));
+        _jfxScene = new Scene(root);
+        stage.setScene(_jfxScene);
         stage.show();
         _gc = _canvas.getGraphicsContext2D();
         return _gc;
