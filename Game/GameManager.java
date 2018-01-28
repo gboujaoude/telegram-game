@@ -12,18 +12,35 @@ public class GameManager
     private TextContainer _currentSentence;
     private Scramble _scramble = new Scramble();
     private CharacterEntity _inFocus;
+    private int _xOffset;
+    private int _yOffset;
 
     GameManager()
     {
-        _level = 1;
+        _level = 0;
         _levelSentences = _scramble.getter(_level);
         _currentSentence = new TextContainer();
-        int xOffset = 30;
-        int yOffset = Singleton.engine.getWindow().getHeight()/4 * 2;
-        _currentSentence.setText( _levelSentences.pop().getScrambled(), 50,xOffset,yOffset);
+        _xOffset = 30;
+        _yOffset = Singleton.engine.getWindow().getHeight()/4 * 2;
         applyBlur();
         setBackground();
     }
+
+    void nextLevel()
+    {
+        _level++;
+        _levelSentences = _scramble.getter(_level);
+        setBackground();
+        nextTelegram();
+
+    }
+
+    void nextTelegram()
+    {
+        _currentSentence.setText( _levelSentences.pop().getScrambled(), 50,_xOffset,_yOffset);
+    }
+
+
     void applyBlur()
     {
         int size = _currentSentence.size();
@@ -37,10 +54,15 @@ public class GameManager
         }
     }
 
+
+
     void setBackground()
     {
         switch (_level)
         {
+            case 0:
+                Singleton.engine.getScene().setBackground("file:img/backgrounds/InstructionsScreenNoButton.jpg");
+                break;
             case 1:
                 Singleton.engine.getScene().setBackground("file:img/telegrams/Telegram01.jpg");
                 break;
@@ -49,6 +71,12 @@ public class GameManager
                 break;
             case 3:
                 Singleton.engine.getScene().setBackground("file:img/telegrams/Telegram03.jpg");
+                break;
+            case 4:
+                Singleton.engine.getScene().setBackground("file:img/backgrounds/GameOverBackground.jpg");
+                break;
+            case 5:
+                Singleton.engine.getScene().setBackground("file:img/backgrounds/???");
                 break;
             default:
                 Singleton.engine.getScene().setBackground("file:img/telegrams/Telegram01.jpg");
