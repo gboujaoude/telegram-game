@@ -18,6 +18,7 @@ public class GameManager
     private Stack<Sentence> _levelSentences = new Stack<Sentence>();
     private ArrayList<TextContainer> _levelTextContainers = new ArrayList<TextContainer>();
     private TextContainer _currentSentence;
+    private String _currentCorrectSentence;
     private Scramble _scramble = new Scramble();
     private CharacterEntity _inFocus;
     private int _xOffset;
@@ -57,8 +58,23 @@ public class GameManager
     }
 
     void nextTelegram()
+    {	
+    	//_currentCorrectSentence =
+        Sentence s =_levelSentences.pop();
+        String curScram = s.getScrambled();
+        _currentCorrectSentence = s.getOriginal();
+        _currentSentence.setText(curScram, 50,_xOffset,_yOffset);
+        applyBlur();
+    }
+    
+    public boolean checkGuess(String correctSentence)
     {
-        _currentSentence.setText( _levelSentences.pop().getScrambled(), 50,_xOffset,_yOffset);
+    	String guess = _currentSentence.getGuess();
+    	guess = guess.substring(0, guess.length() - 1);
+    	System.out.println("This is their guess:" + guess.toLowerCase());
+    	System.out.println("Im comparing to:" + correctSentence.toLowerCase());
+    	if(guess.toLowerCase().equals(correctSentence.toLowerCase())) return true;
+    	return false;
     }
 
 
@@ -156,6 +172,10 @@ public class GameManager
                 public void handle(ActionEvent event)
                 {
 //                    TODO next tele after check
+                	if(checkGuess(_currentCorrectSentence) == false) System.out.println("Decrement heart");
+                	else System.out.println("You got it right!");
+                	if(!_levelSentences.isEmpty()) nextTelegram();
+                	else nextLevel();
                     System.out.println("The button was clicked1");
                 }
             });
