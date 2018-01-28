@@ -16,6 +16,7 @@ public class Scramble
 	static String test4 = "I told her the shortest way.";
 	static String test5 = "Our efforts are unfounded.";
 
+	static Stack<Sentence> battle0 = new Stack<>();
 	static Stack<Sentence> battle1 = new Stack<>();
 	static Stack<Sentence> battle2 = new Stack<>();
 	static Stack<Sentence> battle3 = new Stack<>();
@@ -142,10 +143,11 @@ public class Scramble
 	{
 		switch (phase)
 		{
+			case 0: return battle0;
 			case 1: return battle1;
 			case 2: return battle2;
 			case 3: return battle3;
-			default: return battle3;
+			default: return battle0;
 
 		}
 

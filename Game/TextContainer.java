@@ -60,4 +60,13 @@ public class TextContainer
     {
         return _characters.size();
     }
+    
+    public String getGuess()
+    {
+    	String temp = "";
+    	for(CharacterEntity c : _characters){
+    		temp = temp + c.getCharacter();
+    	}
+    	return temp;
+    }
 }

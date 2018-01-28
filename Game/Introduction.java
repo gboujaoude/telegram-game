@@ -1,7 +1,25 @@
-package PACKAGE_NAME;
+import javafx.scene.paint.Color;
 
 /**
- * Created by Stehano on 1/28/18.
+ * Plays a quick intro animation
  */
-public class Introduction {
+public class Introduction implements IEngineInterface {
+    private boolean _isIntroDone = true;
+
+    public void playIntro()
+    {
+        _isIntroDone = false;
+        Singleton.engine.getScene().setClearColor(Color.BLACK);
+    }
+
+    public boolean isIntroDone()
+    {
+        return _isIntroDone;
+    }
+
+    @Override
+    public boolean update(double deltaSeconds) {
+
+        return true;
+    }
 }
