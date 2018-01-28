@@ -7,13 +7,18 @@ import java.util.Stack;
  */
 public class KeyInput implements IEngineInterface {
 
-    private Stack<String> _keyBuffer;
+    private Stack<String> _keyBuffer = new Stack<String>();
     private boolean _isClicked;
+    private Point _lastPointClicked;
+
     KeyInput(Scene scene)
     {
-        scene.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> _isClicked = true);
+        scene.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> updateLastClickedPoint(e));
         scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> _keyBuffer.push(e.getText()));
     }
+
+    private void updateLastClickedPoint(MouseEvent e) {_lastPointClicked = new Point(e.getX(), e.getY()); }
+
     public String getLastKey()
     {
         return _keyBuffer.empty() ? "" : _keyBuffer.pop();
@@ -23,6 +28,8 @@ public class KeyInput implements IEngineInterface {
     {
         return _isClicked;
     }
+
+    public Point getLastPointClicked() { return _lastPointClicked; }
 
     @Override
     public boolean update(double deltaSeconds) {
