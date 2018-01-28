@@ -19,7 +19,6 @@ class Sentence
     	{
     		if(scrambled.charAt(i) == '?'){
     			indices.add(i);
-    			System.out.println(i);
     		}
     	}
     }
