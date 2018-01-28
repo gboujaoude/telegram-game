@@ -31,7 +31,10 @@ public class CharacterEntity extends Actor {
     public void setFontsize(int size)
     {
         setWidthHeight(size, size);
-        _text.setFont(Font.loadFont("file:resources/carbontype.ttf", size));
+        _text.setFont(Font.loadFont("resources/carbontype.ttf", size));
+        if(_text.getFont() == null) {
+            _text.setFont(new Font("Courier New", size));
+        }
     }
 
     public char getCharacter()
@@ -66,7 +69,6 @@ public class CharacterEntity extends Actor {
         {
             setWidthHeight(fontSize, fontSize);
         }
-        //System.out.println("Rendering");
         gc.setFill(_color);
         gc.setEffect(_blur);
         gc.setFont(_text.getFont());
