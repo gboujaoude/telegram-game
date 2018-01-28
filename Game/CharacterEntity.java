@@ -42,6 +42,12 @@ public class CharacterEntity extends Actor {
         return _character.charAt(0);
     }
 
+    public void setCharacter(char c)
+    {
+        _character = "" + c;
+        _text.setText(_character);
+    }
+
     public void setColor(Color color)
     {
         _color = color;
