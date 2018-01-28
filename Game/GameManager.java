@@ -22,6 +22,10 @@ public class GameManager
     private CharacterEntity _inFocus;
     private int _xOffset;
     private int _yOffset;
+    private int _lives = 3;
+    private GameHeart heart1 = new GameHeart();
+    private GameHeart heart2 = new GameHeart();
+    private GameHeart heart3 = new GameHeart();
 
     GameManager()
     {
@@ -33,7 +37,9 @@ public class GameManager
         applyBlur();
         setBackground();
         addButton(300,400,"img/buttonsAndSigns/StartButton.png",1,"Start");
-
+        heart1.setImage("file: img/buttonsAndSigns/HeartYellow.png",50,50);
+        heart1.setXYDepth(50,50,0);
+        Singleton.engine.getScene().registerActor(heart1);
     }
 
     void startFirstLevel()
@@ -166,6 +172,14 @@ public class GameManager
         }
 
         button.addToWindow();
+
+    }
+    void loseLife()
+    {
+        switch(_lives)
+        {
+            case 1:
+        }
 
     }
 
