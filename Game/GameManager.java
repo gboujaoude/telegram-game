@@ -37,10 +37,10 @@ public class GameManager
         applyBlur();
         setBackground();
         addButton(300,400,"img/buttonsAndSigns/StartButton.png",1,"Start");
-//        heart1.setImage("file: img/buttonsAndSigns/HeartRed.png",100,100);
-//        heart1.setXYDepth(100,100,0);
+        heart1.setImage("file: img/buttonsAndSigns/ReadHeart3.png",100,100);
+        heart1.setXYDepth(100,100,0);
         addButton(200,200, "img/buttonsAndSigns/RedHeart3.png",4,"1");
-//        Singleton.engine.getScene().registerActor(heart1);
+        Singleton.engine.getScene().registerActor(heart1);
 
     }
 
@@ -162,7 +162,8 @@ public class GameManager
                 }
             });
             break;
-            case 4: button.setDisabled(true);
+            case 4:
+//                button.setDisabled(true);
                     button.setStyle("-fx-min-height: 3px; -fx-max-height: 3px; -fx-min-width: 3px");
 
                 break;

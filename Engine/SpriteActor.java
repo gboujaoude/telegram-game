@@ -15,6 +15,7 @@ public abstract class SpriteActor extends Actor {
 
     @Override
     public void render(GraphicsContext gc) {
+        gc.setGlobalAlpha(1.0);
         gc.drawImage(_texture, getX(), getY());
     }
 }
