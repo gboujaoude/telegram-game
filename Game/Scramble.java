@@ -1,12 +1,8 @@
-package Game;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class Scramble 
 {
@@ -21,21 +17,18 @@ public class Scramble
 	static String test4 = "I told her the shortest way.";
 	static String test5 = "Our efforts are unfounded.";
 	
-	static ArrayList<String> battle1 = new ArrayList<String>();
-	static ArrayList<String> battle2 = new ArrayList<String>();
-	static ArrayList<String> battle3 = new ArrayList<String>();
+	static Stack<Sentence> battle1 = new Stack<>();
+	static Stack<Sentence> battle2 = new Stack<>();
+	static Stack<Sentence> battle3 = new Stack<>();
 	
 	static String guess = null;
-	
-	public static void main(String[] args)
+
+	public Scramble()
 	{
-		Scramble myScramble = new Scramble();
 
 		try
 		{
-			Map<String,Info>  myMap = myScramble.scrambleAll();
-			Info test = myMap.get(test1);
-			System.out.println(test.scramble);
+			scrambleAll();
 
 		} catch (Exception e)
 		{
@@ -44,46 +37,37 @@ public class Scramble
 
 	}
 
-	private Map<String,Info> scrambleAll() throws IOException
+	private	void scrambleAll() throws IOException
     {
-		Map<String, Info> myMap = new HashMap<String, Info>();
 		FileReader fr = new FileReader("resources/battle1.txt");
 		BufferedReader in = new BufferedReader(fr);
 		String current;
 		while ((current = in.readLine()) != null)
 		{
 			String scram = scramble(current);
-			Info scramInfo = new Info(scram);
-			battle1.add(current);
+			Sentence scramable = new Sentence(current,scram);
+			battle1.push(scramable);
 			
-			myMap.put(current, scramInfo);
-			System.out.println(current + "  "+ scramInfo.scramble);
 		}
 		fr = new FileReader("resources/battle2.txt");
 		in = new BufferedReader(fr);
 		while ((current = in.readLine()) != null)
 		{
 			String scram = scramble(current);
-			Info scramInfo = new Info(scram);
-			battle2.add(current);
+			Sentence scramable = new Sentence(current,scram);
+			battle2.push(scramable);
 			
-			myMap.put(current, scramInfo);
-			System.out.println(current + "  "+ scramInfo.scramble);
 		}
 		fr = new FileReader("resources/battle3.txt");
 		in = new BufferedReader(fr);
 		while ((current = in.readLine()) != null)
 		{
 			String scram = scramble(current);
-			Info scramInfo = new Info(scram);
-			battle3.add(current);
+			Sentence scramable = new Sentence(current,scram);
+			battle3.push(scramable);
 			
-			myMap.put(current, scramInfo);
-			System.out.println(current + "  "+ scramInfo.scramble);
 		}
-		
-		return myMap;
-	}
+		}
 	private String scramble(String value)
 	{
 		boolean flag = false;
@@ -108,35 +92,41 @@ public class Scramble
 		}
 		return temp;
 	}
-	
-	public String getWord()
+
+
+	class Sentence
 	{
-		String temp = battle1.get(rand.nextInt(battle1.size()));
-		guess = temp;
-		return temp;
-	}
-	
-	public boolean checkGuess(String attempt)
-	{
-		if(guess.equals(attempt)) return true;
-		else return false;
-	}
-	
-	class Phrase
-	{
-		String arg;
-		public Phrase(String arg)
+		public String original;
+		public String scrambled;
+
+		public Sentence(String original, String scrambled)
 		{
-			this.arg = arg;
+			this.original = original;
+			this.scrambled = scrambled;
 		}
-	}
-	
-	class Info
-	{
-		public String scramble;
-		public Info(String scramble)
+
+		public String getOriginal()
 		{
-			this.scramble = scramble;
+			return this.original;
 		}
+		public String getScrambled()
+		{
+			return this.scrambled;
+		}
+
+	}
+	public Stack<Sentence> getter(int phase)
+	{
+		switch (phase)
+		{
+			case 1: return battle1;
+			case 2: return battle2;
+			case 3: return battle3;
+
+
+		}
+		return battle3;
+
+
 	}
 }
