@@ -3,6 +3,10 @@ import javafx.application.Platform;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.Console;
+import java.io.FileReader;
+
 /**
  * Core component of the game. Its main job is to
  * run the main game loop, initialize and destroy game
@@ -18,6 +22,7 @@ public class Engine extends Application {
     private Renderer _renderer;
     private KeyInput _input;
     private ApplicationEntryPoint _application;
+    private ConsoleVariables _cvar;
     private long _prevFrameTime;
     private boolean _isRunning = true;
     private boolean _isInitialized = false;
@@ -36,10 +41,17 @@ public class Engine extends Application {
         return _renderer.getScene();
     }
 
+    public ConsoleVariables getCVarManager()
+    {
+        return _cvar;
+    }
+
     @Override
     public void start(Stage stage) {
         if (_isInitialized) return;
         Singleton.engine = this;
+        _cvar = new ConsoleVariables();
+        loadEngineConfig("resources/engine.cfg");
         _isInitialized = true;
         _prevFrameTime = System.currentTimeMillis();
         _window = new Window();
@@ -85,6 +97,42 @@ public class Engine extends Application {
     {
         _application.shutdown();
         Platform.exit();
+    }
+
+    private void loadEngineConfig(String engineCfgFile)
+    {
+        try
+        {
+            FileReader fileReader = new FileReader(engineCfgFile);
+            BufferedReader reader = new BufferedReader(fileReader);
+            String line;
+            while ((line = reader.readLine()) != null)
+            {
+                line = line.replaceAll(" ", "");
+                System.out.println(line);
+                String variable = "";
+                String value = "";
+                boolean isReadingValue = false;
+                for (int i = 1; i < line.length(); ++i)
+                {
+                    char c = line.charAt(i);
+                    if (c == '=')
+                    {
+                        isReadingValue = true;
+                        continue;
+                    }
+                    if (isReadingValue) value += c;
+                    else variable += c;
+                }
+                _cvar.addCVar(variable, value);
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("Unable to load " + engineCfgFile);
+            System.exit(-1);
+        }
+
     }
 
     public static void main(String[] args)

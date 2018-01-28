@@ -1,7 +1,9 @@
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -54,6 +56,17 @@ public class Window implements IEngineInterface {
 
     public GraphicsContext init(Stage stage)
     {
+        ConsoleVariables cvars = Singleton.engine.getCVarManager();
+        if (cvars.contains("fullscreen")) _isFullscreen = Boolean.parseBoolean(cvars.getVariable("fullscreen"));
+        if (cvars.contains("width")) _width = Integer.parseInt(cvars.getVariable("width"));
+        if (cvars.contains("height")) _height = Integer.parseInt(cvars.getVariable("height"));
+        stage.setFullScreen(_isFullscreen);
+        if (_isFullscreen)
+        {
+            Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
+            _width = (int)screenSize.getWidth();
+            _height = (int)screenSize.getHeight();
+        }
         stage.setResizable(false);
         stage.setTitle(_title);
         _stage = stage;
