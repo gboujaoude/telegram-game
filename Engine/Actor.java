@@ -24,15 +24,21 @@ public abstract class Actor {
 
     public void setXYDepth(int x, int y, int depth)
     {
-        _x = x + 10; // This offset prevents it from being inside the window border for (0,0)
-        _y = y + 10;
+        _x = x; // This offset prevents it from being inside the window border for (0,0)
+        _y = y;
         _depth = depth;
+        y = (int)Singleton.engine.getWindow().getJFXScene().getY();
+        y += _height / 2;
+        _y += y;
     }
 
     public void setWidthHeight(int width, int height)
     {
         _width = width;
         _height = height;
+        int y = (int)Singleton.engine.getWindow().getJFXScene().getY();
+        y += _height / 2;
+        _y += y;
     }
 
     public int getX()
