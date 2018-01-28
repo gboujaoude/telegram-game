@@ -36,6 +36,11 @@ public class GameManager
 
     }
 
+    void startFirstLevel()
+    {
+        nextLevel();
+        addButton(750,425,"img/buttonsAndSigns/SendButton.png",2,"Send");
+    }
     void nextLevel()
     {
         _level++;
@@ -132,7 +137,8 @@ public class GameManager
                 @Override
                 public void handle(ActionEvent event)
                 {
-                    nextLevel();
+//                    nextLevel();
+                    startFirstLevel();
                     button.removeFromWindow();
                     System.out.println("The button was clicked");
                 }
