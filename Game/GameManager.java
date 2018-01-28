@@ -42,16 +42,16 @@ public class GameManager
         switch (_level)
         {
             case 1:
-                Singleton.engine.getScene().setBackground("file:img/Telegram01.jpg");
+                Singleton.engine.getScene().setBackground("file:img/telegrams/Telegram01.jpg");
                 break;
             case 2:
-                Singleton.engine.getScene().setBackground("file:img/Telegram02.jpg");
+                Singleton.engine.getScene().setBackground("file:img/telegrams/Telegram02.jpg");
                 break;
             case 3:
-                Singleton.engine.getScene().setBackground("file:img/Telegram03.jpg");
+                Singleton.engine.getScene().setBackground("file:img/telegrams/Telegram03.jpg");
                 break;
             default:
-                Singleton.engine.getScene().setBackground("file:img/Telegram01.jpg");
+                Singleton.engine.getScene().setBackground("file:img/telegrams/Telegram01.jpg");
                 break;
         }
     }
