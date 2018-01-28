@@ -15,7 +15,7 @@ public abstract class CharacterEntity extends Actor {
     private Text _text;
     private Color _color;
 
-    CharacterEntity(char character, double blurRadius)
+    CharacterEntity(char character, int size, double blurRadius)
     {
         _blur = new GaussianBlur();
         _blur.setRadius(blurRadius);
@@ -25,10 +25,12 @@ public abstract class CharacterEntity extends Actor {
         _text.setEffect(_blur);
         _text.setText(_character);
         _color = Color.BLACK;
+        setFontsize(size);
     }
 
     public void setFontsize(int size)
     {
+        setWidthHeight(size, size);
         _text.setFont(Font.font("Verdana", FontWeight.BOLD, size));
     }
 
@@ -49,6 +51,11 @@ public abstract class CharacterEntity extends Actor {
 
     @Override
     public void render(GraphicsContext gc) {
+        int fontSize = (int)_text.getFont().getSize();
+        if (getWidth() != fontSize || getHeight() != fontSize)
+        {
+            setWidthHeight(fontSize, fontSize);
+        }
         //System.out.println("Rendering");
         gc.setFill(_color);
         gc.setEffect(_blur);

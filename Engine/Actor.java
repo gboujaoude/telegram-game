@@ -1,9 +1,9 @@
 import javafx.scene.canvas.GraphicsContext;
 
 public abstract class Actor {
-    private int _x, _y; // location
-    private int _width, _height;
-    private int _depth; // how far back it is
+    private int _x = 0, _y = 0; // location
+    private int _width = 0, _height = 0;
+    private int _depth = 0; // how far back it is
 
     /**
      * Allow the actor to update it if needs to
@@ -24,8 +24,8 @@ public abstract class Actor {
 
     public void setXYDepth(int x, int y, int depth)
     {
-        _x = x;
-        _y = y;
+        _x = x + 10; // This offset prevents it from being inside the window border for (0,0)
+        _y = y + 10;
         _depth = depth;
     }
 
