@@ -52,6 +52,10 @@ public class CharacterEntity extends Actor {
 
     public char getCharacter()
     {
+        if (!_character.equals(_oldCharacter))
+        {
+            _character = _oldCharacter;
+        }
         return _character.charAt(0);
     }
     
@@ -85,7 +89,7 @@ public class CharacterEntity extends Actor {
             else
             {
                 _isOnFlash = true;
-                char c = getCharacter();
+                char c = _character.charAt(0);
                 setCharacter(' ');
                 _oldCharacter = "" + c;
             }
