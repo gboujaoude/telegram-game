@@ -1,3 +1,5 @@
+import sun.util.resources.cldr.chr.CalendarData_chr_US;
+
 import javax.xml.soap.Text;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -18,6 +20,21 @@ public class GameManager
         int xOffset = 30;
         int yOffset = Singleton.engine.getWindow().getHeight()/4 * 2;
         _currentSentence.setText( _levelSentences.pop().getScrambled(), 50,xOffset,yOffset);
+        applyBlur();
+    }
+
+
+    void applyBlur()
+    {
+        int size = _currentSentence.size();
+        for(int i = 0; i < size; i++)
+        {
+            CharacterEntity ce = _currentSentence.getEntityAt(i);
+            if(ce.getCharacter() == '?')
+            {
+                ce.setBlurRadius(20.0);
+            }
+        }
     }
 
 
