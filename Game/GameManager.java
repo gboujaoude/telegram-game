@@ -61,6 +61,10 @@ public class GameManager
         _inFocus = ce;
     }
 
+    CharacterEntity getInFocus()
+    {
+    	return _inFocus;
+    }
 
 
 

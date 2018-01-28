@@ -41,7 +41,7 @@ public class CharacterEntity extends Actor {
     {
         return _character.charAt(0);
     }
-
+    
     public void setCharacter(char c)
     {
         _character = "" + c;
@@ -65,7 +65,10 @@ public class CharacterEntity extends Actor {
 
     @Override
     public void onMouseClick() {
-
+    	//setBlurRadius(0);
+    	//setCharacter('.');
+    	GameManagerWrapper.gameManager.setInFocus(this);
+    	
     }
 
     @Override

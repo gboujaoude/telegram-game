@@ -1,5 +1,5 @@
 public class GameManagerWrapper {
-    public GameManager gameManager;
+    public static GameManager gameManager;
     GameManagerWrapper(GameManager gameManager)
     {
         this.gameManager = gameManager;
