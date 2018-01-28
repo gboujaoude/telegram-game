@@ -30,17 +30,22 @@ public class ApplicationEntryPoint implements IEngineInterface {
         KeyInput keyManager = Singleton.engine.getInputManager();
         CharacterEntity ce = _gameManager.getInFocus();
         if(ce != null){
-        	ce.setBlurRadius(0);
+        	String lastKey = keyManager.getLastKey();
+        	if(!lastKey.isEmpty()){
+        		ce.setCharacter(lastKey.charAt(0));
+        		ce.setBlurRadius(0);
+        	}
+        	
         }
         if(keyManager.isClicked())
         {
 
         }
-        String lastKey = keyManager.getLastKey();
+        /*String lastKey = keyManager.getLastKey();
         if(!lastKey.isEmpty())
         {
             // Perform action.
-        }
+        }*/
 
         return true;
     }
