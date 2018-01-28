@@ -7,7 +7,7 @@ import java.util.*;
 public class Scramble 
 {
 	String fileSource = "sentences.txt";
-	static int difficulty = 6;
+	static int difficulty = 10;
 	static Random rand = new Random();
 	static Random rand2 = new Random();
 
@@ -39,7 +39,7 @@ public class Scramble
 
 	private	void scrambleAll() throws IOException
     {
-		FileReader fr = new FileReader("resources/battle1.txt");
+		FileReader fr = new FileReader("C:\\Users\\Christian\\IdeaProjects\\untitled1\\src\\resources\\battle1.txt");
 		BufferedReader in = new BufferedReader(fr);
 		String current;
 		while ((current = in.readLine()) != null)
@@ -49,22 +49,20 @@ public class Scramble
 			battle1.push(scramable);
 			
 		}
-		fr = new FileReader("resources/battle2.txt");
+		fr = new FileReader("C:\\Users\\Christian\\IdeaProjects\\untitled1\\src\\resources\\battle2.txt");
 		in = new BufferedReader(fr);
-		difficulty = 7;
 		while ((current = in.readLine()) != null)
 		{
-			String scram = scramble2(current);
+			String scram = scramble(current);
 			Sentence scramable = new Sentence(current,scram);
 			battle2.push(scramable);
 			
 		}
-		fr = new FileReader("resources/battle3.txt");
+		fr = new FileReader("C:\\Users\\Christian\\IdeaProjects\\untitled1\\src\\resources\\battle3.txt");
 		in = new BufferedReader(fr);
-		difficulty = 4;
 		while ((current = in.readLine()) != null)
 		{
-			String scram = scramble3(current);
+			String scram = scramble(current);
 			Sentence scramable = new Sentence(current,scram);
 			battle3.push(scramable);
 			
@@ -72,13 +70,19 @@ public class Scramble
 		}
 	private String scramble(String value)
 	{
+		boolean flag = false;
 		String temp = "";
 
 		for (int i = 0; i < value.length(); i++) {
 			int blur = rand.nextInt(difficulty);
+			int blur2 = rand2.nextInt(difficulty);
 			if(Character.isLetter(value.charAt(i)) && blur == 0)
 			{
-				temp = temp + "?";
+				char randC = (char)(rand.nextInt(26) + 'a');
+				if(i == 0) randC = Character.toUpperCase(randC);
+				if(blur2 <= 1 && blur2 < 7) randC = '?';
+				temp = temp + randC;
+				flag = !flag;
 			}
 			else
 			{
@@ -89,55 +93,7 @@ public class Scramble
 		return temp;
 	}
 
-  private String scramble2(String value)
-  {
-    boolean flag = false;
-    String temp = "";
 
-    for (int i = 0; i < value.length(); i++) {
-      int blur = rand.nextInt(difficulty);
-      int blur2 = rand2.nextInt(difficulty);
-      if(Character.isLetter(value.charAt(i)) && blur == 0)
-      {
-        char randC = (char)(rand.nextInt(26) + 'a');
-        if(i == 0) randC = Character.toUpperCase(randC);
-        if( blur2 < 6) randC = '?';
-        temp = temp + randC;
-        flag = !flag;
-      }
-      else
-      {
-        temp = temp + value.charAt(i);
-      }
-
-    }
-    return temp;
-  }
-
-  private String scramble3(String value)
-  {
-    boolean flag = false;
-    String temp = "";
-
-    for (int i = 0; i < value.length(); i++) {
-      int blur = rand.nextInt(difficulty);
-      int blur2 = rand2.nextInt(difficulty);
-      if(Character.isLetter(value.charAt(i)) && blur == 0)
-      {
-        char randC = (char)(rand.nextInt(26) + 'a');
-        if(i == 0) randC = Character.toUpperCase(randC);
-        if( blur2 < 3) randC = '?';
-        temp = temp + randC;
-        flag = !flag;
-      }
-      else
-      {
-        temp = temp + value.charAt(i);
-      }
-
-    }
-    return temp;
-  }
 
 	public Stack<Sentence> getter(int phase)
 	{
@@ -152,16 +108,4 @@ public class Scramble
 
 
 	}
-//	public static  void main(String[] args)
-//  {
-//    Scramble s = new Scramble();
-//
-//    Stack<Sentence> stack1 = s.getter(3);
-//    for (Sentence sen : stack1)
-//    {
-//      System.out.println("sen orig: " + sen.getOriginal());
-//      System.out.println("sen scram: " + sen.getScrambled());
-//
-//    }
-//  }
 }

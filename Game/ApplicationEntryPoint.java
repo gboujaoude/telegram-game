@@ -8,9 +8,12 @@ public class ApplicationEntryPoint implements IEngineInterface {
     /**
      * Called by the engine at startup - initializes the game
      */
+    private GameManager _gameManager;
+    private GameManagerWrapper _gameManagerWrapper;
     public void init()
     {
-        GameManager gameManager = new GameManager();
+        _gameManager = new GameManager();
+        _gameManagerWrapper = new GameManagerWrapper(_gameManager);
     }
 
     /**
