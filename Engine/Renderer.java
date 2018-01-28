@@ -9,6 +9,7 @@ import javax.sound.midi.SysexMessage;
 public class Renderer implements IEngineInterface {
     private GraphicsContext _gc;
     private SceneGraph _scene;
+    private double _globalAlpha = 0.0;
 
     public SceneGraph getScene()
     {
@@ -28,6 +29,7 @@ public class Renderer implements IEngineInterface {
     @Override
     public boolean update(double deltaSeconds) {
         _gc.setFill(Color.ANTIQUEWHITE);
+        _gc.setGlobalAlpha(1.0);
         //_gc.clearRect(0, 0, Singleton.engine.getWindow().getWidth(), Singleton.engine.getWindow().getHeight());
         _gc.fillRect(0, 0, Singleton.engine.getWindow().getWidth(), Singleton.engine.getWindow().getHeight());
         ImageView background = _scene.getBackground();
@@ -54,6 +56,36 @@ public class Renderer implements IEngineInterface {
             a.update(deltaSeconds);
             a.render(_gc);
         }
+        double fadeIn = _scene.getFadeIn();
+        double fadeInOriginal = _scene.getFadeInOriginal();
+        double fadeOut = _scene.getFadeOut();
+        double fadeOutOriginal = _scene.getFadeOutOriginal();
+        double fadeSeconds = _scene.getElapsedFadeSeconds();
+        if (fadeOut > 0.0)
+        {
+            _globalAlpha = (fadeOut - fadeSeconds) / fadeOutOriginal;
+            _globalAlpha = 1.0 - _globalAlpha;
+            _scene.setElapsedFadeSeconds(fadeSeconds + deltaSeconds);
+            if (_globalAlpha >= 1.0)
+            {
+                _scene.fadeOut(0.0);
+                _scene.setElapsedFadeSeconds(0.0);
+                _globalAlpha = 1.0;
+            }
+        }
+        else if (fadeIn > 0.0) {
+            _globalAlpha = (fadeIn - fadeSeconds) / fadeInOriginal;
+            _scene.setElapsedFadeSeconds(fadeSeconds + deltaSeconds);
+            if (_globalAlpha <= 0.0)
+            {
+                _scene.fadeIn(0.0);
+                _scene.setElapsedFadeSeconds(0.0);
+                _globalAlpha = 0.0;
+            }
+        }
+        _gc.setGlobalAlpha(_globalAlpha);
+        _gc.setFill(Color.BLACK);
+        _gc.fillRect(0, 0, Singleton.engine.getWindow().getWidth(), Singleton.engine.getWindow().getHeight());
         return true;
     }
 }

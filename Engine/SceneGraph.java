@@ -12,9 +12,69 @@ import java.util.TreeSet;
 public class SceneGraph {
     private ImageView _background = null;
     private LinkedList<Actor> _actors = new LinkedList<Actor>();
+    private double _fadeIn = 0.0, _fadeOut = 0.0;
+    private double _elapsedFadeSeconds = 0.0;
+    private double _fadeInOriginal = 0.0, _fadeOutOriginal = 0.0;
 
     SceneGraph()
     {
+    }
+
+    public boolean isFadeDone()
+    {
+        return _fadeIn == 0.0 && _fadeOut == 0.0;
+    }
+
+    public void fadeIn(double numSeconds)
+    {
+        if (numSeconds < 0.0) throw new IllegalArgumentException("Negative seconds for fade in");
+        _fadeIn = numSeconds;
+        _elapsedFadeSeconds = 0.0;
+        _fadeInOriginal = numSeconds;
+    }
+
+    public void fadeOut(double numSeconds)
+    {
+        if (numSeconds < 0.0) throw new IllegalArgumentException("Negative seconds for fade out");
+        _fadeOut = numSeconds;
+        _elapsedFadeSeconds = 0.0;
+        _fadeOutOriginal = numSeconds;
+    }
+
+    public void fadeOutFadeIn(double numSeconds)
+    {
+        fadeOut(numSeconds);
+        fadeIn(numSeconds);
+    }
+
+    public double getFadeIn()
+    {
+        return _fadeIn;
+    }
+
+    public double getFadeOut()
+    {
+        return _fadeOut;
+    }
+
+    public double getFadeInOriginal()
+    {
+        return _fadeInOriginal;
+    }
+
+    public double getFadeOutOriginal()
+    {
+        return _fadeOutOriginal;
+    }
+
+    public double getElapsedFadeSeconds()
+    {
+        return _elapsedFadeSeconds;
+    }
+
+    public void setElapsedFadeSeconds(double value)
+    {
+        _elapsedFadeSeconds = value;
     }
 
     public void setBackground(String image)
