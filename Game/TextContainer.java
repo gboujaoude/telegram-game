@@ -23,7 +23,6 @@ public class TextContainer
             c.setXYDepth(x, y, 0);
             _characters.add(c);
             Singleton.engine.getScene().registerActor(c);
-            System.out.println(c.getX() + " " + c.getY());
             x += size;
             if (x >= width || x + size >= width)
             {
@@ -37,5 +36,10 @@ public class TextContainer
     {
         if (index >= _characters.size() || index < 0) throw new RuntimeException("Index out of range to TextContainer");
         return _characters.get(index);
+    }
+
+    public int size()
+    {
+        return _characters.size();
     }
 }
