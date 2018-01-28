@@ -93,7 +93,7 @@ public class Engine extends Application {
         System.exit(0);
     }
 
-    private void shutdown()
+    public void shutdown()
     {
         _application.shutdown();
         Platform.exit();

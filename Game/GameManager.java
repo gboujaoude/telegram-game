@@ -1,5 +1,6 @@
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 
 import sun.util.resources.cldr.chr.CalendarData_chr_US;
@@ -24,9 +25,7 @@ public class GameManager
     private int _xOffset;
     private int _yOffset;
     private int _lives = 3;
-    private GameHeart heart1 = new GameHeart();
-    private GameHeart heart2 = new GameHeart();
-    private GameHeart heart3 = new GameHeart();
+    private Stack<ImageView> heartStack = new Stack<>();
 
     GameManager()
     {
@@ -38,17 +37,18 @@ public class GameManager
         applyBlur();
         setBackground();
         addButton(300,400,"img/buttonsAndSigns/StartButton.png",1,"Start");
-        heart1.setImage("file: img/buttonsAndSigns/ReadHeart3.png",100,100);
-        heart1.setXYDepth(100,100,0);
-        addButton(200,200, "img/buttonsAndSigns/RedHeart3.png",4,"1");
-        Singleton.engine.getScene().registerActor(heart1);
+
+
 
     }
 
     void startFirstLevel()
     {
         nextLevel();
-        addButton(750,425,"img/buttonsAndSigns/SendButton.png",2,"Send");
+        addButton(800,500,"img/buttonsAndSigns/SendButton.png",2,"Send");
+        addHeart("img/buttonsAndSigns/RedHeart3.png", 100,100);
+        addHeart("img/buttonsAndSigns/RedHeart3.png", 120,100);
+        addHeart("img/buttonsAndSigns/RedHeart3.png", 140,100);
     }
     void nextLevel()
     {
@@ -73,8 +73,6 @@ public class GameManager
     {
     	String guess = _currentSentence.getGuess();
     	guess = guess.substring(0, guess.length() - 1);
-    	System.out.println("This is their guess:" + guess.toLowerCase());
-    	System.out.println("Im comparing to:" + correctSentence.toLowerCase());
     	if(guess.toLowerCase().equals(correctSentence.toLowerCase())) return true;
     	return false;
     }
@@ -93,7 +91,53 @@ public class GameManager
         }
     }
 
+void addHeart(String imagePath, int x, int y)
+{
+    try
+    {
+        FileInputStream input = new FileInputStream(imagePath);
+        Image image = new Image(input);
+        ImageView imageView = new ImageView(image);
+        imageView.setLayoutX(x);
+        imageView.setLayoutY(y);
+        ((Group)Singleton.engine.getWindow().getJFXScene().getRoot()).getChildren().add(imageView);
+        heartStack.push(imageView);
+    }
 
+    catch (Exception e)
+    {
+        System.out.println(e);
+    }
+}
+void loadEndGame()
+{
+    _level = 4;
+    setBackground();
+    addButton(300,400,"img/buttonsAndSigns/MainMenuButton.png",3,"Main Menu");
+
+}
+void loadLGame()
+{
+    _level = 5;
+    setBackground();
+    addButton(300,400,"img/buttonsAndSigns/MainMenuButton.png",3,"Main Menu");
+
+}
+void removeHeart(UIButton button)
+{
+    _lives--;
+    if (!heartStack.empty())
+    {
+        ImageView heart = heartStack.pop();
+        ((Group) Singleton.engine.getWindow().getJFXScene().getRoot()).getChildren().remove(heart);
+
+    }
+    else
+    {
+        loadLGame();
+        button.removeFromWindow();
+    }
+}
 
     void setBackground()
     {
@@ -112,10 +156,10 @@ public class GameManager
                 Singleton.engine.getScene().setBackground("file:img/telegrams/Telegram03.jpg");
                 break;
             case 4:
-                Singleton.engine.getScene().setBackground("file:img/backgrounds/GameOverBackground.jpg");
+                Singleton.engine.getScene().setBackground("file:img/backgrounds/WinScreenBackground");
                 break;
             case 5:
-                Singleton.engine.getScene().setBackground("file:img/backgrounds/???");
+                Singleton.engine.getScene().setBackground("file:img/backgrounds/GameOverBackground.jpg");
                 break;
             default:
                 Singleton.engine.getScene().setBackground("file:img/telegrams/Telegram01.jpg");
@@ -132,6 +176,17 @@ public class GameManager
     CharacterEntity getInFocus()
     {
     	return _inFocus;
+    }
+
+
+    void clearWords()
+    {
+        int size = _currentSentence.size();
+        for(int i = 0; i < size; i++)
+        {
+            CharacterEntity ce = _currentSentence.getEntityAt(i);
+            ce.setCharacter(' ');
+        }
     }
 
 
@@ -174,26 +229,29 @@ public class GameManager
                 public void handle(ActionEvent event)
                 {
 //                    TODO next tele after check
-                	if(checkGuess(_currentCorrectSentence) == false) System.out.println("Decrement heart");
-                	else System.out.println("You got it right!");
-                	if(!_levelSentences.isEmpty()) nextTelegram();
-                	else nextLevel();
-                    System.out.println("The button was clicked1");
+                    if (checkGuess(_currentCorrectSentence) == false) removeHeart(button);
+                    if (_lives >= 0)
+                    {
+                        if (!_levelSentences.isEmpty()) nextTelegram();
+                        else nextLevel();
+                    }
+                    else{
+                        clearWords();
+                    }
                 }
             });
             break;
-            case 4:
-//                button.setDisabled(true);
-                    button.setStyle("-fx-min-height: 3px; -fx-max-height: 3px; -fx-min-width: 3px");
-
-                break;
              default: button.setActionEvent(new EventHandler<ActionEvent>()
             {
                 @Override
                 public void handle(ActionEvent event)
                 {
-//                    TODO goback to main menu
-                    System.out.println("The button was clicked2");
+
+                    setBackground();
+                    addButton(300,400,"img/buttonsAndSigns/StartButton.png",1,"Start");
+                    button.removeFromWindow();
+                    Singleton.engine.shutdown();
+
                 }
             });
         }
