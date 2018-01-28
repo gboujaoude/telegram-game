@@ -1,6 +1,7 @@
 import sun.util.resources.cldr.chr.CalendarData_chr_US;
 
 import javax.xml.soap.Text;
+import java.lang.reflect.UndeclaredThrowableException;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -24,6 +25,8 @@ public class GameManager
         _yOffset = Singleton.engine.getWindow().getHeight()/4 * 2;
         applyBlur();
         setBackground();
+        UIButton button = new UIButton("Start", 50, 100);
+        button.setStyle("-fx-background-image: url('file:img/buttonsAndSigns/StartButton.jpg')");
     }
 
     void nextLevel()
