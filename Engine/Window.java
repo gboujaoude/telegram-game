@@ -54,6 +54,7 @@ public class Window implements IEngineInterface {
 
     public GraphicsContext init(Stage stage)
     {
+        stage.setResizable(false);
         stage.setTitle(_title);
         _stage = stage;
         Group root = new Group();
