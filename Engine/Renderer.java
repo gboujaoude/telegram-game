@@ -1,5 +1,8 @@
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.effect.MotionBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -28,7 +31,7 @@ public class Renderer implements IEngineInterface {
 
     @Override
     public boolean update(double deltaSeconds) {
-        _gc.setFill(Color.ANTIQUEWHITE);
+        _gc.setFill(_scene.getClearColor());
         _gc.setGlobalAlpha(1.0);
         //_gc.clearRect(0, 0, Singleton.engine.getWindow().getWidth(), Singleton.engine.getWindow().getHeight());
         _gc.fillRect(0, 0, Singleton.engine.getWindow().getWidth(), Singleton.engine.getWindow().getHeight());
@@ -86,6 +89,19 @@ public class Renderer implements IEngineInterface {
         _gc.setGlobalAlpha(_globalAlpha);
         _gc.setFill(Color.BLACK);
         _gc.fillRect(0, 0, Singleton.engine.getWindow().getWidth(), Singleton.engine.getWindow().getHeight());
+
+        /*
+        _gc.setFill(Color.DARKGRAY);
+        _gc.setGlobalBlendMode(BlendMode.SRC_OVER);
+        _gc.setGlobalAlpha(0.2);
+        MotionBlur blur = new MotionBlur();
+        blur.setRadius(35);
+        blur.setAngle(45);
+        _gc.setEffect(blur);
+        _gc.fillRect(0, 0, Singleton.engine.getWindow().getWidth(), Singleton.engine.getWindow().getHeight());
+        blur.setRadius(0);
+        _gc.setEffect(blur);
+        */
         return true;
     }
 }

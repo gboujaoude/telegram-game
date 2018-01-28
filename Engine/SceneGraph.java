@@ -1,17 +1,21 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.TreeSet;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Represents the scene for the game
  */
 public class SceneGraph {
     private ImageView _background = null;
-    private LinkedList<Actor> _actors = new LinkedList<Actor>();
+    private Color _fillColor = Color.ANTIQUEWHITE;
+    private LinkedList<Actor> _actors = new LinkedList<>();
+    private final ReentrantLock _lock = new ReentrantLock();
     private double _fadeIn = 0.0, _fadeOut = 0.0;
     private double _elapsedFadeSeconds = 0.0;
     private double _fadeInOriginal = 0.0, _fadeOutOriginal = 0.0;
@@ -85,6 +89,32 @@ public class SceneGraph {
                 false, true));
     }
 
+    public void setClearColor(Color color)
+    {
+        _fillColor = color;
+    }
+
+    /**
+     * Reverts clear color to default
+     */
+    public void unsetClearColor()
+    {
+        _fillColor = Color.ANTIQUEWHITE;
+    }
+
+    public Color getClearColor()
+    {
+        return _fillColor;
+    }
+
+    /**
+     * Sets the background to nothing
+     */
+    public void unsetBackground()
+    {
+        _background = null;
+    }
+
     public ImageView getBackground()
     {
         return _background;
@@ -92,6 +122,7 @@ public class SceneGraph {
 
     public void registerActor(Actor actor)
     {
+        _lock.lock();
         if (_actors.size() == 0) _actors.add(actor);
         int index = 0;
         boolean wasAdded = false;
@@ -106,23 +137,31 @@ public class SceneGraph {
             ++index;
         }
         if (!wasAdded) _actors.add(actor);
+        _lock.unlock();
     }
 
     public void removeActor(Actor actor)
     {
+        _lock.lock();
         _actors.remove(actor);
+        _lock.unlock();
     }
 
     public void reorderActors()
     {
+        _lock.lock();
         LinkedList<Actor> list = new LinkedList<Actor>(_actors);
         _actors.clear();
         for (Actor a : list) registerActor(a);
         _actors = list;
+        _lock.unlock();
     }
 
     public LinkedList<Actor> getActors()
     {
-        return _actors;
+        _lock.lock();
+        LinkedList<Actor> actors = new LinkedList<>(_actors);
+        _lock.unlock();
+        return actors;
     }
 }
