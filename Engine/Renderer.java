@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 import javax.sound.midi.SysexMessage;
+import java.util.LinkedList;
 
 public class Renderer implements IEngineInterface {
     private GraphicsContext _gc;

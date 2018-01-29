@@ -123,20 +123,25 @@ public class SceneGraph {
     public void registerActor(Actor actor)
     {
         _lock.lock();
-        if (_actors.size() == 0) _actors.add(actor);
-        int index = 0;
-        boolean wasAdded = false;
-        for (Actor a : _actors)
-        {
-            if (a.getDepth() < actor.getDepth())
+        if (!_actors.contains(actor)) {
+            if (_actors.size() == 0)
             {
-                _actors.add(index, actor);
-                wasAdded = true;
-                break;
+                _actors.add(actor);
+                _lock.unlock();
+                return;
             }
-            ++index;
+            int index = 0;
+            boolean wasAdded = false;
+            for (Actor a : _actors) {
+                if (a.getDepth() < actor.getDepth()) {
+                    _actors.add(index, actor);
+                    wasAdded = true;
+                    break;
+                }
+                ++index;
+            }
+            if (!wasAdded) _actors.add(actor);
         }
-        if (!wasAdded) _actors.add(actor);
         _lock.unlock();
     }
 
